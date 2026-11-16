@@ -1,0 +1,6 @@
+python-jobspy>=1.4
+requests
+anthropic>=2.8,<3
+pydantic>=2
+pyyaml
+python-dotenv

@@ -1,0 +1,44 @@
+# Search settings - edit these, then run:
+#   python scrape.py       (no AI, free)      -> collects listings that match the criteria
+#   python extract.py      (AI, cheap)        -> builds the final table of skills, tools, etc.
+#   python synthesize.py   (AI, cheap)        -> bullet-point summary
+
+job_title: "Data Scientist"
+location: "Paris, France"
+country: "France"                # needed by Indeed
+
+# Only keep listings whose title contains one of these (case-insensitive). Empty list = keep all.
+title_must_contain: ["data scien", "datascien"]
+# Drop listings whose title contains one of these (e.g. internships, work-study).
+title_must_not_contain: ["stage", "stagiaire", "intern", "internship", "alternance", "alternant", "apprenti"]
+
+date_from: "2026-10-16"          # posting date range
+date_to: "2026-11-16"
+
+# Yearly gross salary in EUR. Listings without a salary are kept. Use null for no limit.
+salary_min: 40000
+salary_max: 65000
+
+# Years of experience required by the listing (read by the AI). Listings that don't say are kept.
+experience_min: 0
+experience_max: 5
+
+# Sites: indeed, linkedin, glassdoor, hellowork, welcometothejungle
+sites: ["indeed", "linkedin", "glassdoor", "hellowork", "welcometothejungle"]
+results_per_site: 25             # max 25 (enforced), to keep volumes human-sized
+
+# Human-like pacing: random pauses (in seconds) before every request and between sites.
+# With the defaults a full run takes about 10 minutes.
+pacing:
+  request_delay: [5, 14]         # usual pause before each request
+  long_pause_chance: 0.15        # sometimes pause longer, like reading a listing
+  long_pause: [20, 45]
+  site_delay: [30, 90]           # pause between two sites
+
+# Welcome to the Jungle blocks automated access after a few pages. true = let Claude read its pages
+# (about $0.003 per page with Haiku), false = free direct access. Override per run with
+# `python scrape.py --wttj-ai` or `python scrape.py --no-wttj-ai`.
+wttj_use_ai: false
+
+# AI model for extract.py and synthesize.py (claude-haiku-5-5 is by far the cheapest)
+model: claude-haiku-5-5
